@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PropertyManagamentDatabase.Interface
 {
-    public interface  IDatebase<T> where T : class, new()
+    public interface  IDatabase<T> where T : class, new()
     {
         bool Delete(T item);
         void DeleteAll();
+        IQueryable<T> Query { get; set; }
         void Add(T item);
     }
 }

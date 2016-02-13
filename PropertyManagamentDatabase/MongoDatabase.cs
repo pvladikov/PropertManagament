@@ -10,21 +10,46 @@ using System.Threading.Tasks;
 
 namespace PropertyManagamentDatabase
 {
-    public class MongoDatabase<T> : IDatebase<T> where T : class, new ()
+    public class MongoDatabase<T> : IDatabase<T> where T : class, new()
     {
-        private IMongoDatabase db;
-        private string collectionName;
+       public const string CONNECTION_STRING_NAME = "db";
+        public const string DATABASE_NAME = "PropertyManagament";
+        public const string COLLECTION_NAME = "propertymanagament";
+
+        private readonly IMongoClient _client;
+        private readonly IMongoDatabase _db;
+
+
+        public MongoDatabase(string collectionName)
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings[CONNECTION_STRING_NAME].ConnectionString;
+            _client = new MongoClient(connectionString);
+            _db = _client.GetDatabase(DATABASE_NAME);
+        }
 
         private IMongoCollection<T> collection
         {
             get
             {
-                return db.GetCollection<T>(collectionName);
+                return _db.GetCollection<T>(COLLECTION_NAME);
             }
             set {
                 collection = value;
             }
         }
+
+        public IQueryable<T> Query
+        {
+            get
+            {
+                return collection.AsQueryable<T>();
+            }
+            set
+            {
+                Query = value;
+            }
+        }
+
         public bool Delete(T item)
         {
             ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
@@ -44,7 +69,7 @@ namespace PropertyManagamentDatabase
 
         public void DeleteAll()
         {
-            db.DropCollection(typeof(T).Name);
+            _db.DropCollection(typeof(T).Name);
         }
     }
 }
