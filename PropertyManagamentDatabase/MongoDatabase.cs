@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PropertyManagametTypes;
 
 namespace PropertyManagamentDatabase
 {
-    public class MongoDatabase<T> : IDatabase<T> where T : class, new()
+    public class MongoDatabase<T> : IDatabase<T> where T: EntityBase
     {
        public const string CONNECTION_STRING_NAME = "db";
-        public const string DATABASE_NAME = "PropertyManagament";
+        public const string DATABASE_NAME = "propertymanagament";
         public const string COLLECTION_NAME = "propertymanagament";
 
         private readonly IMongoClient _client;
@@ -62,14 +63,30 @@ namespace PropertyManagamentDatabase
 
         }
 
-        public void Add(T item)
+        public async void Create(T item)
         {
-            collection.InsertOne(item);
+           await  collection.InsertOneAsync(item);
         }
 
         public void DeleteAll()
         {
             _db.DropCollection(typeof(T).Name);
         }
-    }
+
+        public bool Update(T item)
+        {
+            ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
+            var filter_builder = Builders<T>.Filter;
+            var filter = filter_builder.Eq("_id", id);
+
+            var result = collection.ReplaceOne<T>(doc => doc.Id == id, item, new UpdateOptions { IsUpsert = true });
+            return result.ModifiedCount == 1;
+
+        }
+
+        //public IMongoCollection<Property> Property
+        //{
+        //    get { return _db.GetCollection<Property>(COLLECTION_NAME); }
+        //}
+    } 
 }

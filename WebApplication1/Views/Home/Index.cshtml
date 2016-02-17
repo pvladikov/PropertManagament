@@ -3,29 +3,49 @@
     ViewBag.Title = "Home";
 }
 
-@section scripts
-{
-    <script src="~/Scripts/home.js"></script>
-}
+@*@section scripts
+    {
+    <script src="~/Scripts/controller.js"></script>
+}*@
 
-<h2>Hello World!</h2>
 
-<div data-ng-app='homeApplication' data-ng-controller='homeController'>
-    <table>
+<div class="container">
+    <div>
+        <input type='button' value='New Property' data-ng-click='property()' />
+    </div>
+    <div>
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchProperty">
+
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+</div>
+    @*<table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <td data-ng-click="sort='upi'">Upi</td>   
                 <td data-ng-click="sort='area'">Area</td>   
-              
+                <td data-ng-click="sort='manner_of_permanent_usage'">Manner of Permanent Usage</td>   
+                <td >Picture</td>   
+                <td></td>   
             </tr>
         </thead>
         <tbody>
-            <tr data-ng-repeat='property in propertymanagament | orderBy:sort'>
-                <td>{{ property.area }}</td>              
+            <tr data-ng-repeat='property in propertymanagament | filter:searchProperty'>
+                <td>{{ property.upi }}</td>
+                <td>{{ property.area }}</td>
+                <td>{{ property.Manner_of_permanent_usage }}</td>
+                <td>{{ property.picture_url }}</td>
+                <td>
+                    <button ng-hide="editingData[property.id]" ng-click="modify(property)">Modify</button>
+                </td>
             </tr>
-        </tbody>
-    </table>
-
-    <p>
-        <input type='button' value='Property' data-ng-click='property()' />
-    </p>
-</div>
+        </tbody>      
+    </table>*@

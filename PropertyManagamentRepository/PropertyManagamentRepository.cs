@@ -18,5 +18,15 @@ namespace PropertyManagamentRepository
         {
             return db.Query.AsEnumerable();
         }
+
+        public static bool Create(Property property)
+        {
+            return db.Update(property);
+        }
+
+        public static bool Update(Property property)
+        {
+            return db.Update(property);
+        }
     }
 }
