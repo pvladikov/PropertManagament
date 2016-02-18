@@ -11,17 +11,16 @@ using PropertyManagametTypes;
 
 namespace PropertyManagamentDatabase
 {
-    public class MongoDatabase<T> : IDatabase<T> where T: EntityBase
+    public class MongoDatabase<T> : IDatabase<T> where T : EntityBase
     {
-       public const string CONNECTION_STRING_NAME = "db";
+        public const string CONNECTION_STRING_NAME = "db";
         public const string DATABASE_NAME = "propertymanagament";
         public const string COLLECTION_NAME = "propertymanagament";
 
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _db;
 
-
-        public MongoDatabase(string collectionName)
+        public MongoDatabase()
         {
             var connectionString = ConfigurationManager.ConnectionStrings[CONNECTION_STRING_NAME].ConnectionString;
             _client = new MongoClient(connectionString);
@@ -34,7 +33,8 @@ namespace PropertyManagamentDatabase
             {
                 return _db.GetCollection<T>(COLLECTION_NAME);
             }
-            set {
+            set
+            {
                 collection = value;
             }
         }
@@ -63,9 +63,9 @@ namespace PropertyManagamentDatabase
 
         }
 
-        public async void Create(T item)
+        public void Create(T item)
         {
-           await  collection.InsertOneAsync(item);
+            collection.InsertOne(item);
         }
 
         public void DeleteAll()
@@ -88,5 +88,5 @@ namespace PropertyManagamentDatabase
         //{
         //    get { return _db.GetCollection<Property>(COLLECTION_NAME); }
         //}
-    } 
+    }
 }

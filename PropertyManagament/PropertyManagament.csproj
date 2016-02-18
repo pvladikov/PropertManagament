@@ -263,9 +263,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PropertyManagamentRepository\PropertyManagamentRepository.csproj">
-      <Project>{c9eb804a-24c6-4b48-a9e0-7c49fe2388c8}</Project>
-      <Name>PropertyManagamentRepository</Name>
+    <ProjectReference Include="..\PropertyManagamentDatabase\PropertyManagamentDatabase.csproj">
+      <Project>{2e50741f-e8e4-40ba-8fdf-6eb84b365e46}</Project>
+      <Name>PropertyManagamentDatabase</Name>
     </ProjectReference>
     <ProjectReference Include="..\PropertyManagametTypes\PropertyManagametTypes.csproj">
       <Project>{15d367e0-0653-4dd3-8f92-53557a13ad67}</Project>
