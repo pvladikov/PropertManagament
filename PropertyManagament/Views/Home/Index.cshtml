@@ -27,7 +27,7 @@
     </div>
     <div class="gridStyle" ng-grid="gridOptions"></div>
 </div>
-    @*<table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <td data-ng-click="sort='upi'">Upi</td>   
@@ -41,11 +41,11 @@
             <tr data-ng-repeat='property in propertymanagament | filter:searchProperty'>
                 <td>{{ property.upi }}</td>
                 <td>{{ property.area }}</td>
-                <td>{{ property.Manner_of_permanent_usage }}</td>
+                <td>{{ property.manner_of_permanent_usage }}</td>
                 <td>{{ property.picture_url }}</td>
                 <td>
                     <button ng-hide="editingData[property.id]" ng-click="modify(property)">Modify</button>
                 </td>
             </tr>
         </tbody>      
-    </table>*@
+    </table>

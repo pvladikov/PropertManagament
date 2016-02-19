@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PropertyManagametTypes;
+using System.Linq.Expressions;
 
 namespace PropertyManagamentDatabase
 {
@@ -15,7 +16,7 @@ namespace PropertyManagamentDatabase
     {
         public const string CONNECTION_STRING_NAME = "db";
         public const string DATABASE_NAME = "propertymanagament";
-        public const string COLLECTION_NAME = "propertymanagament";
+        public const string COLLECTION_NAME = "pm";
 
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _db;
@@ -51,11 +52,11 @@ namespace PropertyManagamentDatabase
             }
         }
 
-        public bool Delete(T item)
+        public bool Delete(T item )
         {
-            ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
-            var filter_builder = Builders<T>.Filter;
-            var filter = filter_builder.Eq("_id", id);
+            //ObjectId id = new ObjectId(typeof(T).GetProperty("id").GetValue(item, null).ToString());
+             var filter_builder = Builders<T>.Filter;
+             var filter = filter_builder.Eq("_id", ObjectId.Parse(item.Id));
 
             var result = collection.DeleteOne(filter);
 
@@ -75,12 +76,16 @@ namespace PropertyManagamentDatabase
 
         public bool Update(T item)
         {
-            ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
-            var filter_builder = Builders<T>.Filter;
-            var filter = filter_builder.Eq("_id", id);
+            //ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
+            //var filter_builder = Builders<T>.Filter;
+            //var filter = filter_builder.Eq("_id", id);
 
-            var result = collection.ReplaceOne<T>(doc => doc.Id == id, item, new UpdateOptions { IsUpsert = true });
-            return result.ModifiedCount == 1;
+            //var result = collection.UpdateOne<T>(predicate, UpdateDefinition<T> new UpdateOptions { IsUpsert = true },);
+            //return result.ModifiedCount == 1;
+
+            var filter = Builders<T>.Filter.Eq(s => s.Id, item.Id);
+            var result = collection.ReplaceOne(filter, item);
+             return result.ModifiedCount == 1;
 
         }
 

@@ -36,8 +36,7 @@ namespace WebApplication1
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                      "~/Scripts/angular.js",
-                      "~/Scripts/angular.min.js"));
+                      "~/Scripts/angular.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ng-grid").Include(
                     "~/Scripts/ng-grid.js",

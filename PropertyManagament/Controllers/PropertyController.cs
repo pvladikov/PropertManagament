@@ -2,6 +2,7 @@
 using PropertyManagamentDatabase;
 using PropertyManagamentDatabase.Interface;
 using PropertyManagametTypes;
+using PropertyManagametTypes.Enum;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace PropertyManagament.Controllers
 {
     public class PropertyController : Controller
     {
-        IDatabase<Property> propertyRepo;
-        IDatabase<Owner> ownerRepo;
+        IDatabase<Property> propertyRepository;
+        IDatabase<Owner> ownerRepository;
 
         public PropertyController() : this(new MongoDatabase<Property>(), new MongoDatabase<Owner>())
         {
@@ -26,35 +27,46 @@ namespace PropertyManagament.Controllers
 
         public PropertyController(MongoDatabase<Property> categoriesRepo, MongoDatabase<Owner> ownerRepo)
         {
-            this.propertyRepo = categoriesRepo;
-            this.ownerRepo = ownerRepo;
+            this.propertyRepository = categoriesRepo;
+            this.ownerRepository = ownerRepo;
         }
 
 
         [HttpGet]
-        public JsonResult Read()
+        public ActionResult Read()
         {
             //IEnumerable<Property> properties = PropertyManagamentRepository.PropertyManagamentRepository.ToList();
-            var properties = propertyRepo.Query;
+            var properties = propertyRepository.Query;
 
-            return Json(properties, JsonRequestBehavior.AllowGet);
+            var json = JsonConvert.SerializeObject(properties, new MyStringEnumConverter());
+            return new ContentResult { Content = json, ContentType = "application/json" };
+
+            // return Json(properties, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ContentResult Create()
+        public ActionResult Create()
         {
             Property property = new Property();
-            propertyRepo.Create(property);
+            propertyRepository.Create(property);
             var json = JsonConvert.SerializeObject(property, new MyStringEnumConverter());
 
             return new ContentResult { Content = json, ContentType = "application/json" };
+
+            //return Json(property);
+        }
+
+        [HttpPost]
+        public JsonResult Delete(Property property) {
+            var res = propertyRepository.Delete(property);
+            return Json(res);
         }
 
         [HttpPut]
         public JsonResult EditProperty(Property property)
         {
             //PropertyManagamentRepository.PropertyManagamentRepository.Update(property);
-            propertyRepo.Update(property);
+            propertyRepository.Update(property);
 
             return Json(property);
         }

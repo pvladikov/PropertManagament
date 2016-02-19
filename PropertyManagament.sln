@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagament", "Prope
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagamentDatabase", "PropertyManagamentDatabase\PropertyManagamentDatabase.csproj", "{2E50741F-E8E4-40BA-8FDF-6EB84B365E46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagametTypes", "PropertyManagametTypes\PropertyManagametTypes.csproj", "{15D367E0-0653-4DD3-8F92-53557A13AD67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyManagamentTypes", "PropertyManagametTypes\PropertyManagamentTypes.csproj", "{15D367E0-0653-4DD3-8F92-53557A13AD67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

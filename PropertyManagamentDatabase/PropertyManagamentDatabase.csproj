@@ -61,9 +61,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PropertyManagametTypes\PropertyManagametTypes.csproj">
+    <ProjectReference Include="..\PropertyManagametTypes\PropertyManagamentTypes.csproj">
       <Project>{15d367e0-0653-4dd3-8f92-53557a13ad67}</Project>
-      <Name>PropertyManagametTypes</Name>
+      <Name>PropertyManagamentTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

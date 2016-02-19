@@ -1056,9 +1056,9 @@
       <Project>{2e50741f-e8e4-40ba-8fdf-6eb84b365e46}</Project>
       <Name>PropertyManagamentDatabase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PropertyManagametTypes\PropertyManagametTypes.csproj">
+    <ProjectReference Include="..\PropertyManagametTypes\PropertyManagamentTypes.csproj">
       <Project>{15d367e0-0653-4dd3-8f92-53557a13ad67}</Project>
-      <Name>PropertyManagametTypes</Name>
+      <Name>PropertyManagamentTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
