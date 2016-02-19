@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using WebApplication1.Models;
+using PropertyManagament.Models;
 
-namespace WebApplication1
+namespace PropertyManagament
 {
     public partial class Startup
     {

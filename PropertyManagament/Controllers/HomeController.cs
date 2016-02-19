@@ -4,13 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WebApplication1.Controllers
+namespace PropertyManagament.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
             return View();
-        }     
+        }
+
+        public ActionResult NewProperty()
+        {
+            return View();
+        }
     }
 }

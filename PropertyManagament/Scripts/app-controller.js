@@ -6,6 +6,10 @@ app.controller('homeController', function ($scope, $http) {
         $scope.searchProperty = '';
     });
 
+    $http.get('/property/getenum').success(function (data) {
+        $scope.mannerofpermanentusage = data;
+    });
+
      $scope.someProp = 'abc',
      $scope.editProperty = function () {
          $http.post('/property/editproperty').success(function (data) {
@@ -14,9 +18,10 @@ app.controller('homeController', function ($scope, $http) {
      };
 
     //Create New Property
-    $scope.property = function () {
+     $scope.newproperty = function () {
         $http.post('/property/create').success(function (data) {
-            $scope.propertymanagament.push(data);            
+            $scope.propertymanagament.push(data);      
+            $scope.property = data;
         });    
     }
 
@@ -28,6 +33,20 @@ app.controller('homeController', function ($scope, $http) {
                 }
             });
         }
+    }
+
+    $scope.update = function (property) {       
+            $http.post('/property/update', property).success(function (result) {
+                if (result) {
+                    //  $scope.propertymanagament.splice($scope.propertymanagament.indexOf(property), 1);
+                    $scope.show = false;
+                }
+            });        
+    }
+
+    $scope.edit = function (property) {
+        $scope.property = property;
+        $scope.show = true;
     }
 
     $scope.editingData = {};
@@ -102,7 +121,7 @@ app.controller('homeController', function ($scope, $http) {
         { field: 'manner_of_permanent_usage', displayName: 'Manner of Permanent Usage', width: 250 },
         {
             displayName: 'Actions',
-            cellTemplate: '<button type="button" class="btn btn-primary" ng-click="editProperty()">Modify</button> <button type="button" class="btn btn-primary" ng-click="delete(row.entity)">Delete</button>'
+            cellTemplate: '<button type="button" class="btn btn-primary" ng-model="show" ng-click="edit(row.entity)">Modify</button> <button type="button" class="btn btn-primary" ng-click="delete(row.entity)">Delete</button>'
         }
         ]
     };

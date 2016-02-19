@@ -18,8 +18,8 @@ namespace PropertyManagametTypes.Enum
         [EnumMember]
         Residentional,
         //[EnumMember]
-        Industrial = 20,
+        Industrial ,
         // [EnumMember]
-        Agricultural = 30
+        Agricultural
     }
 }

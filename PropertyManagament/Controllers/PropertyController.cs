@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace PropertyManagament.Controllers
 {
@@ -33,15 +34,28 @@ namespace PropertyManagament.Controllers
 
 
         [HttpGet]
-        public ActionResult Read()
+        // public ActionResult Read()
+        public JsonResult Read()
         {
             //IEnumerable<Property> properties = PropertyManagamentRepository.PropertyManagamentRepository.ToList();
             var properties = propertyRepository.Query;
 
-            var json = JsonConvert.SerializeObject(properties, new MyStringEnumConverter());
-            return new ContentResult { Content = json, ContentType = "application/json" };
+            var json = JsonConvert.SerializeObject(properties, new CustumStringEnumConverter());
+            //return new ContentResult { Content = json, ContentType = "application/json" };
 
-            // return Json(properties, JsonRequestBehavior.AllowGet);
+            return Json(properties, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetEnum()
+        {
+            var list = EnumHelper.GetSelectList(typeof(MannerOfPermanentUsage)).Select(x => new NumericValueSelectListItem()
+            {
+                Text = x.Text,
+                Value = int.Parse(x.Value)
+            });
+
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -49,7 +63,19 @@ namespace PropertyManagament.Controllers
         {
             Property property = new Property();
             propertyRepository.Create(property);
-            var json = JsonConvert.SerializeObject(property, new MyStringEnumConverter());
+            var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
+
+            return new ContentResult { Content = json, ContentType = "application/json" };
+
+            //return Json(property);
+        }
+
+        [HttpPost]
+        public ActionResult NewProperty()
+        {
+            Property property = new Property();
+            propertyRepository.Create(property);
+            var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
 
             return new ContentResult { Content = json, ContentType = "application/json" };
 
@@ -62,6 +88,13 @@ namespace PropertyManagament.Controllers
             return Json(res);
         }
 
+        [HttpPost]
+        public JsonResult Update(Property property)
+        {
+            var res = propertyRepository.Update(property);
+            return Json(res);
+        }  
+
         [HttpPut]
         public JsonResult EditProperty(Property property)
         {
@@ -72,7 +105,7 @@ namespace PropertyManagament.Controllers
         }
     }
 
-    public class MyStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
+    public class CustumStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -84,5 +117,11 @@ namespace PropertyManagament.Controllers
 
             base.WriteJson(writer, value, serializer);
         }
+    }
+
+    public class NumericValueSelectListItem
+    {
+        public string Text { get; set; }
+        public int Value { get; set; }
     }
 }
