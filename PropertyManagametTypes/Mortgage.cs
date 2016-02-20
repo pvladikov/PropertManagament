@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace PropertyManagametTypes
 {
-    public class Mortgage
-    {
-        public ObjectId id { get; private set; }
+    public class Mortgage : EntityBase
+    {       
         public DateTime end_date { get; set; }
-        public decimal money_amount { get; set; }
+        public decimal amount { get; set; }
     }
 }

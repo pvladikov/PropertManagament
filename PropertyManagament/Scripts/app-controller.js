@@ -1,6 +1,6 @@
 ﻿var app = angular.module('homeApplication', ['ngGrid']);
 
-app.controller('homeController', function ($scope, $http) {
+app.controller('homeController',['$scope','sharedProperties','$http', function ($scope, sharedProperties,$http) {
     $http.get('/property/read').success(function (data) {
         $scope.propertymanagament = data; 
         $scope.searchProperty = '';
@@ -9,8 +9,7 @@ app.controller('homeController', function ($scope, $http) {
     $http.get('/property/getenum').success(function (data) {
         $scope.mannerofpermanentusage = data;
     });
-
-     $scope.someProp = 'abc',
+        
      $scope.editProperty = function () {
          $http.post('/property/editproperty').success(function (data) {
              $scope.propertymanagament.push(data);
@@ -46,15 +45,20 @@ app.controller('homeController', function ($scope, $http) {
 
     $scope.edit = function (property) {
         $scope.property = property;
+        $scope.addProperty();
         $scope.show = true;
+        $scope.has_mortgage = false;
+        if (property.mortgage) {
+            $scope.has_mortgage = true;
+        }
     }
-
-    $scope.editingData = {};
-
-    $scope.modify = function (property) {
-        $scope.editingData[property.id] = true;
-    };
-
+     
+    $scope.managemortgage = function (property) {
+        $http.post('/property/mortgage', property).success(function (data) {          
+            $scope.property.mortgage = data;
+        });
+    }
+    
     $scope.filterOptions = {
         filterText: "",
         useExternalFilter: true
@@ -125,5 +129,25 @@ app.controller('homeController', function ($scope, $http) {
         }
         ]
     };
-  
-});
+
+    $scope.addProperty = function () {       
+        sharedProperties.addProperty($scope.property);      
+    };
+
+}])
+    .service('sharedProperties', function () {
+        var data = null;
+
+        return {
+            getProperty:function () {
+                // This exposed private data
+                return data;
+            },
+
+            addProperty: function (property) {
+                data = property;
+            }       
+        };
+    });
+
+ 

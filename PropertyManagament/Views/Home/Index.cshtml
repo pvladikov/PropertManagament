@@ -53,7 +53,7 @@
 <br />
 
 <div ng-show="show">
-    <form id="updateCategoryForm" class="form-inline" >
+    <form id="updateCategoryForm" class="form-inline">
         <div class="form-group">
             <label class="sr-only" id="upi" for="upiInput">UPI</label>
             <input type="text" class="form-control" id="upiInput" ng-model="property.upi" placeholder="{{property.upi}}">
@@ -65,40 +65,74 @@
         <div class="form-group">
             <label class="sr-only" id="mannerOfUsageLbl" for="mannerOfUsageSelect">Type</label>
             <select id="mannerOfUsageSelect" ng-model="property.manner_of_permanent_usage" ng-options="c.Value as c.Text for c in mannerofpermanentusage" class="form-control"></select>
-        </div>
-        <button type="button" ng-click="update(property)">Submit</button>
-    </form>
-
-    <br />
-    <br />
-    <br />
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Mortgage</h3>
-        </div>
-
-        <div class="panel-body">
-
-            <form id="addEditPFForm" class="form-inline">
-
-                <div class="form-group">
-                    <label class="sr-only" for="moneyInput">Money</label>
-                    <input id="moneyInput" name="moneyInput" type='text' class="form-control" placeholder="Money" />
-                </div>
-
-
-                <div class="form-group">
-                    <div class='input-group date' id='endDatePicker'>
-                        <input id="endDate" name="endDateName" type='text' class="form-control" placeholder="End Date" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-
-            </form>
-
-        </div>
+        </div>       
+       </form> 
+        <div class="form-group" ng-controller="data-controller">
+            <form novalidate name="f1" ng-submit="SaveFile()">
+                <div style="color: red">{{Message}}</div>
+                <table>
+                    <tr>
+                        <td>Select File : </td>
+                        <td>
+                            <input type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+                            <span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
+                            <span class="error">{{FileInvalidMessage}}</span>
+                        </td>
+                    </tr>                
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Upload File" />
+                        </td>
+                    </tr>
+                </table>
+            </form>    
+        
     </div>
-</div>
+    <div>
+        <div><img src="{{property.picture_url}}" /></div>
+    </div>
+            <br />
+
+        <div class="form-group">
+            <form id="mortgageCheckBoxForm" class="form-inline">
+                <label id="hasMortgageLbl" for="hasMortgageCheckbox">
+                    <input id="hasMortgageCheckbox" type="checkbox" ng-model="property.has_mortgage" ng-change="managemortgage(property)">
+                    Mortgage:
+                </label>
+            </form>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mortgage</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <form id="addEditPFForm" class="form-inline">
+
+                    <div class="form-group">
+                        <label class="sr-only" for="moneyInput">Money</label>
+                        <input id="moneyInput" name="moneyInput" type='text' class="form-control" placeholder="{{property.mortgage.amount}}" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class='input-group date' id='endDatePicker'>
+                            <input id="endDate" name="endDateName" type='date' class="form-control" ng-model="property.mortgage.end_date.dateAsString" placeholder="{{property.mortgage.end_date.dateAsString}}" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <button type="button" ng-click="update(property)">Submit</button>
+    </div>

@@ -10,12 +10,8 @@ namespace PropertyManagament
         {
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                          "~/Content/bootstrap.css",
-                         "~/Content/bootstrap-theme.css",
-                         "~/Content/bootstrap-theme.css.map",
-                         "~/Content/bootstrap-theme.min.css.map",
-                         "~/Content/bootstrap.css.map",
-                         "~/Content/bootstrap.min.css",
-                         "~/Content/bootstrap.min.css.map"
+                         "~/Content/bootstrap-theme.css",                  
+                         "~/Content/bootstrap.min.css"                 
              ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(                     
@@ -45,6 +41,9 @@ namespace PropertyManagament
             bundles.Add(new ScriptBundle("~/bundles/app-controller").Include(
                     "~/Scripts/app-controller.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/data-controller").Include(
+                    "~/Scripts/data-controller.js"));
         }
 
     }
