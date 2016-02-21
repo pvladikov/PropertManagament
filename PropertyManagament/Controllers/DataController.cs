@@ -26,7 +26,7 @@ namespace PropertyManagament.Controllers
                 {
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                     pictureURL = Path.Combine(@"C:\PropertyPictures", fileName);
-                    file.SaveAs(Path.Combine(@"C:\PropertyPictures", fileName));
+                    file.SaveAs(Path.Combine(Server.MapPath("~/UploadedFiles"), fileName));
 
                     //UploadedFile f = new UploadedFile
                     //{
@@ -49,7 +49,7 @@ namespace PropertyManagament.Controllers
                 }
 
             }
-            return new JsonResult { Data = new { Message = Message, Status = flag, URL = pictureURL } };
+            return new JsonResult { Data = new { Message = Message, Status = flag, URL = fileName } };
         }
     }
 }

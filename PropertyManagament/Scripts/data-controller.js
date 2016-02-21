@@ -10,15 +10,11 @@
     $scope.IsFormValid = false;
     $scope.property = sharedProperties.getProperty();
  
-    //Form Validation
+
     $scope.$watch("f1.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
-    });
- 
- 
-    // THIS IS REQUIRED AS File Control is not supported 2 way binding features of Angular
-    // ------------------------------------------------------------------------------------
-    //File Validation
+    }); 
+  
     $scope.ChechFileValid = function (file) {
         var isValid = false;
         if ($scope.SelectedFileForUpload != null) {
@@ -36,13 +32,11 @@
         $scope.IsFileValid = isValid;
     };
     
-    //File Select event 
+ 
     $scope.selectFileforUpload = function (file) {
         $scope.SelectedFileForUpload = file[0];
     }
-    //----------------------------------------------------------------------------------------
- 
-    //Save File
+
     $scope.SaveFile = function () {
        
         $scope.IsFormSubmitted = true;
@@ -62,11 +56,10 @@
             $scope.Message = "All the fields are required.";
         }
     };
-    //Clear form 
+   
     function ClearForm() {
         $scope.FileDescription = "";
-        //as 2 way binding not support for File input Type so we have to clear in this way
-        //you can select based on your requirement
+
         angular.forEach(angular.element("input[type='file']"), function (inputElem) {
             angular.element(inputElem).val(null);
         });

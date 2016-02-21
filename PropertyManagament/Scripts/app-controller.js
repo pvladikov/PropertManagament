@@ -6,6 +6,15 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         $scope.searchProperty = '';
     });
 
+    $scope.$watch('property.mortgage', function () {      
+        if ($scope.property.mortgage) {
+            $scope.property.has_mortgage = true;
+        }
+        else {
+            $scope.property.has_mortgage = false;
+        }
+    });
+
     $http.get('/property/getenum').success(function (data) {
         $scope.mannerofpermanentusage = data;
     });
@@ -47,16 +56,28 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         $scope.property = property;
         $scope.addProperty();
         $scope.show = true;
-        $scope.has_mortgage = false;
-        if (property.mortgage) {
-            $scope.has_mortgage = true;
+        if ($scope.property.mortgage) {
+            $scope.property.has_mortgage = true;
+        }
+        else {
+            $scope.property.has_mortgage = false;
         }
     }
      
+    //Create/Delete Mortgage
     $scope.managemortgage = function (property) {
-        $http.post('/property/mortgage', property).success(function (data) {          
-            $scope.property.mortgage = data;
-        });
+        if (!$scope.property.mortgage) {
+            $http.post('/property/createmortgage', property).success(function (data) {
+                $scope.property.mortgage = data;               
+            });           
+        }
+        else {
+            $scope.property.mortgage = null;
+            $http.post('/property/update', property).success(function (result) {
+                if (result) {                  
+                }
+            });
+        }
     }
     
     $scope.filterOptions = {

@@ -14,7 +14,7 @@
             <div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
-                <input type="text" class="form-control" placeholder="Search" ng-model="searchProperty">
+                <input type="text" class="form-control" placeholder="Search" ng-model="filterOptions.filterText">
 
             </div>
         </div>
@@ -22,31 +22,6 @@
     </div>
     <div class="gridStyle" ng-grid="gridOptions"></div>
 </div>
-    @*<table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <td data-ng-click="sort='upi'">Upi</td>   
-                <td data-ng-click="sort='area'">Area</td>   
-                <td data-ng-click="sort='manner_of_permanent_usage'">Manner of Permanent Usage</td>   
-                <td >Picture</td>   
-                <td></td>   
-            </tr>
-        </thead>
-        <tbody>
-            <tr data-ng-repeat='property in propertymanagament | filter:searchProperty'>
-                <td>{{ property.upi }}</td>
-                <td>{{ property.area }}</td>
-                <td>{{ property.manner_of_permanent_usage }}</td>
-                <td>{{ property.picture_url }}</td>
-                <td>
-                    <button ng-hide="editingData[property.id]" ng-click="modify(property)">Modify</button>
-                </td>
-            </tr>
-        </tbody>      
-    </table>*@
-@{
-    ViewBag.Title = "New Property";
-}
 
 <br />
 <br />
@@ -67,72 +42,64 @@
             <select id="mannerOfUsageSelect" ng-model="property.manner_of_permanent_usage" ng-options="c.Value as c.Text for c in mannerofpermanentusage" class="form-control"></select>
         </div>       
        </form> 
+    <br />
+    <br />
         <div class="form-group" ng-controller="data-controller">
-            <form novalidate name="f1" ng-submit="SaveFile()">
-                <div style="color: red">{{Message}}</div>
-                <table>
-                    <tr>
-                        <td>Select File : </td>
-                        <td>
-                            <input type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
-                            <span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
-                            <span class="error">{{FileInvalidMessage}}</span>
-                        </td>
-                    </tr>                
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="Upload File" />
-                        </td>
-                    </tr>
-                </table>
-            </form>    
-        
-    </div>
+            <form novalidate name="f1" ng-submit="SaveFile()" class="form-inline">
+                @*<div style="color: red">{{Message}}</div>*@               
+                <div class="form-group">
+                    <label class="sr-only" id="fileUploadLbl" for="fileUpload">Select</label>
+                    <input id="fileUpload" type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+                    </div>
+                    @*<span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
+                    <span class="error">{{FileInvalidMessage}}</span>*@
+                    <div class="form-group">
+                        <input type="submit" value="Upload Image" />
+                    </div>             
+             </form>        
+       </div>
     <div>
-        <div><img src="{{property.picture_url}}" /></div>
+        <div><img src="/UploadedFiles/{{property.picture_url}}" height="150" width="150"/></div>
     </div>
             <br />
 
         <div class="form-group">
             <form id="mortgageCheckBoxForm" class="form-inline">
-                <label id="hasMortgageLbl" for="hasMortgageCheckbox">
+                <label class="checkbox" id="hasMortgageLbl" for="hasMortgageCheckbox">
                     <input id="hasMortgageCheckbox" type="checkbox" ng-model="property.has_mortgage" ng-change="managemortgage(property)">
-                    Mortgage:
+                    Mortgage
                 </label>
             </form>
         </div>
-        <div class="panel panel-primary">
+
+        <div class="panel panel-primary" ng-show="property.has_mortgage">
             <div class="panel-heading">
                 <h3 class="panel-title">Mortgage</h3>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body" >
 
                 <form id="addEditPFForm" class="form-inline">
 
                     <div class="form-group">
                         <label class="sr-only" for="moneyInput">Money</label>
-                        <input id="moneyInput" name="moneyInput" type='text' class="form-control" placeholder="{{property.mortgage.amount}}" />
+                        <input id="moneyInput" name="moneyInput" type='text' class="form-control" ng-model="property.mortgage.amount" placeholder="{{property.mortgage.amount}}" />
                     </div>
 
 
                     <div class="form-group">
                         <div class='input-group date' id='endDatePicker'>
-                            <input id="endDate" name="endDateName" type='date' class="form-control" ng-model="property.mortgage.end_date.dateAsString" placeholder="{{property.mortgage.end_date.dateAsString}}" />
+                            <input id="endDate" name="endDateName" type='date' class="form-control" ng-model="property.mortgage.end_date" placeholder="{{property.mortgage.end_date}}" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                     </div>
-
                 </form>
-
-            </div>
+            </div>           
         </div>
-
+      
         <br />
         <br />
-        <br />
-        <button type="button" ng-click="update(property)">Submit</button>
+    <button type="button" ng-click="update(property)">Submit</button>
     </div>

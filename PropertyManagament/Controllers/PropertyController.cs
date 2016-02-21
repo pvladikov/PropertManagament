@@ -72,13 +72,13 @@ namespace PropertyManagament.Controllers
         }
 
         [HttpPost]
-        public JsonResult Mortgage(Property property)
+        public JsonResult CreateMortgage(Property property)
         {
             Mortgage mortgage = new Mortgage();
             property.mortgage = mortgage;
 
             var res = propertyRepository.Update(property);
-            return Json(res);
+            return Json(mortgage);
 
             //mortgageRepository.Create(mortgage);
             // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
@@ -88,49 +88,7 @@ namespace PropertyManagament.Controllers
             //return Json(property);
         }
 
-
-        [HttpPost]
-        public JsonResult UploadFile( object file, object test)
-        {
-
-            foreach (string file_str in Request.Files)
-            {
-                var fileContent = Request.Files[file_str];
-            }
-            var res = new JsonResult();
-            return Json(res);
-
-            //mortgageRepository.Create(mortgage);
-            // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
-
-            //return new ContentResult { Content = property, ContentType = "application/json" };
-
-            //return Json(property);
-        }
-
-
-        [HttpPost]
-        public JsonResult UploadFile(Property property, object file)
-        {
-
-            foreach (string file_str in Request.Files)
-            {
-                var fileContent = Request.Files[file_str];
-            }
-            var res = new JsonResult();
-            return Json(res);
-
-            //mortgageRepository.Create(mortgage);
-            // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
-
-            //return new ContentResult { Content = property, ContentType = "application/json" };
-
-            //return Json(property);
-        }
-
-
-
-        // [HttpPost]
+                
         public ActionResult NewProperty()
         {
             Property property = new Property();
@@ -153,18 +111,7 @@ namespace PropertyManagament.Controllers
         {
             var res = propertyRepository.Update(property);
             return Json(res);
-        }  
-
-
-
-        //[HttpPut]
-        //public JsonResult EditProperty(Property property)
-        //{
-        //    //PropertyManagamentRepository.PropertyManagamentRepository.Update(property);
-        //    propertyRepository.Update(property);
-
-        //    return Json(property);
-        //}
+        }       
     }
 
     public class CustumStringEnumConverter : Newtonsoft.Json.Converters.StringEnumConverter
