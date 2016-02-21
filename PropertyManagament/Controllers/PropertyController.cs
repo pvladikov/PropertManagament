@@ -60,7 +60,7 @@ namespace PropertyManagament.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create()
+        public ActionResult CreateProperty()
         {
             Property property = new Property();
             propertyRepository.Create(property);
@@ -89,25 +89,25 @@ namespace PropertyManagament.Controllers
         }
 
                 
-        public ActionResult NewProperty()
-        {
-            Property property = new Property();
-            propertyRepository.Create(property);
-            var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
+        //public ActionResult NewProperty()
+        //{
+        //    Property property = new Property();
+        //    propertyRepository.Create(property);
+        //    var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
 
-            return new ContentResult { Content = json, ContentType = "application/json" };
+        //    return new ContentResult { Content = json, ContentType = "application/json" };
 
-            //return Json(property);
-        }
+        //    //return Json(property);
+        //}
 
         [HttpPost]
-        public JsonResult Delete(Property property) {
+        public JsonResult DeleteProperty(Property property) {
             var res = propertyRepository.Delete(property);
             return Json(res);
         }
 
         [HttpPost]
-        public JsonResult Update(Property property)
+        public JsonResult UpdateProperty(Property property)
         {
             var res = propertyRepository.Update(property);
             return Json(res);

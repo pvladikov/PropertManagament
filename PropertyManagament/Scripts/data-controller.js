@@ -53,7 +53,7 @@
             });
         }
         else {
-            $scope.Message = "All the fields are required.";
+            $scope.Message = "Please, select image.";
         }
     };
    
