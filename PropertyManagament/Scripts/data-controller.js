@@ -7,9 +7,7 @@
     $scope.FileDescription = "";
     $scope.IsFormSubmitted = false;
     $scope.IsFileValid = false;
-    $scope.IsFormValid = false;
-    $scope.property = sharedProperties.getProperty();
- 
+    $scope.IsFormValid = false; 
 
     $scope.$watch("f1.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
@@ -37,16 +35,22 @@
         $scope.SelectedFileForUpload = file[0];
     }
 
-    $scope.SaveFile = function () {
+    $scope.SaveFile = function (is_property) {
        
         $scope.IsFormSubmitted = true;
         $scope.Message = "";
-        $scope.property = sharedProperties.getProperty();
         $scope.ChechFileValid($scope.SelectedFileForUpload);
         if ($scope.IsFormValid && $scope.IsFileValid) {
             FileUploadService.UploadFile($scope.SelectedFileForUpload, $scope.FileDescription).then(function (d) {
                 alert(d.Message);
-                $scope.property.picture_url = d.URL;
+                if (is_property) {
+                    $scope.property = sharedProperties.getProperty();
+                    $scope.property.picture_url = d.URL;
+                }
+                else {
+                    $scope.owner = sharedProperties.getOwner();
+                    $scope.owner.picture_url = d.URL;
+                }
                 ClearForm();
             }, function (e) {
                 alert(e);
@@ -69,6 +73,7 @@
     }
  
 }])
+
 .factory('FileUploadService', function ($http, $q) { 
     var fac = {};
     fac.UploadFile = function (file, description) {

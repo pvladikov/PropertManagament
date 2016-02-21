@@ -51,7 +51,7 @@
                 <br />
                 <br />
                 <div class="form-group" ng-controller="data-controller">
-                    <form novalidate name="f1" ng-submit="SaveFile()" class="form-inline">
+                    <form novalidate name="f1" ng-submit="SaveFile(true)" class="form-inline">
                         <div style="color: red">{{Message}}</div>
                         <div class="form-group">
                             <label id="fileUploadLbl" class="sr-only" for="fileUpload">Select</label>
@@ -146,7 +146,7 @@
                         <br />
                         <br />
                         <div class="form-group" ng-controller="data-controller">
-                            <form novalidate name="f1" ng-submit="SaveFile()" class="form-inline">
+                            <form novalidate name="f1" ng-submit="SaveFile(false)" class="form-inline">
                                 <div style="color: red">{{Message}}</div>
                                 <div class="form-group">
                                     <label class="sr-only" id="fileUploadLbl" for="fileUpload">Select</label>

@@ -54,6 +54,7 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
 
     $scope.editProperty = function (property) {
         $scope.property = property;
+        $scope.owner = null;
         $scope.addProperty();
         $scope.show = true;
         if ($scope.property.mortgage) {
@@ -274,28 +275,30 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
     };
 
     $scope.addOwner = function () {
-        sharedProperties.addOwner($scope.property);
+        sharedProperties.addOwner($scope.owner);
     };
 }])
     .service('sharedProperties', function () {
-        var data = null;
+        var property = null;
+        var owner = null;
+        var flag = false;
 
         return {
             getProperty:function () {               
-                return data;
+                return property;
             },
 
-            addProperty: function (property) {
-                data = property;
+            addProperty: function (data) {
+                property = data;
             },
 
             getOwner: function () {              
-                return data;
+                return owner;
             },
 
-            addOwner: function (owner) {
-                data = owner;
-           }  
+            addOwner: function (data) {
+                owner = data;
+            }
         };
     });
 
