@@ -18,8 +18,7 @@ namespace PropertyManagament.Controllers
 {
     public class PropertyController : Controller
     {
-        IDatabase<Property> propertyRepository;
-        //IDatabase<Mortgage> mortgageRepository;
+        IDatabase<Property> propertyRepository;      
         IDatabase<Owner> ownerRepository;
 
         public PropertyController() : this(new MongoDatabase<Property>(), new MongoDatabase<Owner>())
@@ -35,15 +34,9 @@ namespace PropertyManagament.Controllers
 
 
         [HttpGet]
-        // public ActionResult Read()
-        public JsonResult Read()
+        public ActionResult Read()      
         {
-            //IEnumerable<Property> properties = PropertyManagamentRepository.PropertyManagamentRepository.ToList();
-            var properties = propertyRepository.Query;
-
-            var json = JsonConvert.SerializeObject(properties, new CustumStringEnumConverter());
-            //return new ContentResult { Content = json, ContentType = "application/json" };
-
+            var properties = propertyRepository.Query;          
             return Json(properties, JsonRequestBehavior.AllowGet);
         }
 
@@ -80,9 +73,7 @@ namespace PropertyManagament.Controllers
             propertyRepository.Create(property);
             var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
 
-            return new ContentResult { Content = json, ContentType = "application/json" };
-
-            //return Json(property);
+            return new ContentResult { Content = json, ContentType = "application/json" };           
         }
 
         [HttpPost]
@@ -92,14 +83,7 @@ namespace PropertyManagament.Controllers
             property.mortgage = mortgage;
 
             var res = propertyRepository.Update(property);
-            return Json(mortgage);
-
-            //mortgageRepository.Create(mortgage);
-            // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
-
-            //return new ContentResult { Content = property, ContentType = "application/json" };
-
-            //return Json(property);
+            return Json(mortgage);         
         }
 
         [HttpPost]
@@ -109,27 +93,8 @@ namespace PropertyManagament.Controllers
             property.owners.Add(owner);
 
             var res = propertyRepository.Update(property);
-            return Json(owner);
-
-            //mortgageRepository.Create(mortgage);
-            // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
-
-            //return new ContentResult { Content = property, ContentType = "application/json" };
-
-            //return Json(property);
-        }
-
-
-        //public ActionResult NewProperty()
-        //{
-        //    Property property = new Property();
-        //    propertyRepository.Create(property);
-        //    var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
-
-        //    return new ContentResult { Content = json, ContentType = "application/json" };
-
-        //    //return Json(property);
-        //}
+            return Json(owner);            
+        }      
 
         [HttpPost]
         public JsonResult DeleteProperty(Property property) {

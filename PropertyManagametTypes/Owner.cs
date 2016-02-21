@@ -10,13 +10,18 @@ namespace PropertyManagametTypes
 {
     [BsonIgnoreExtraElements]
     public class Owner : EntityBase
-    {
-        //public ObjectId id { get; private set; }
+    {      
         [BsonRepresentation(BsonType.String)]
         public string name { get; set; }
+
         [BsonRepresentation(BsonType.String)]
-        public string last_name { get; set; }
+        [BsonElement("last_name")]
+        public string lastName { get; set; }
+
         public string address { get; set; }
-        public string picture_url { get; set; }
+
+        [BsonElement("picture_url")]
+        public string pictureUrl { get; set; }
+    
     }
 }

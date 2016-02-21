@@ -4,26 +4,12 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
     $http.get('/property/read').success(function (data) {
         $scope.propertyManagament = data; 
         $scope.searchProperty = '';
-    });
-
-    //$scope.$watch('property.mortgage', function () {      
-    //    if ($scope.property.mortgage) {
-    //        $scope.property.hasMortgage = true;
-    //    }
-    //    else {
-    //        $scope.property.hasMortgage = false;
-    //    }
-    //});
+    }); 
 
     $http.get('/property/getEnum').success(function (data) {
         $scope.mannerofpermanentusage = data;
-    });
-        
-     //$scope.editProperty = function () {
-     //    $http.post('/property/editProperty').success(function (data) {
-     //        $scope.propertymanagament.push(data);
-     //    });
-     //};
+    });        
+
 
     //Create New Property
      $scope.newProperty = function () {
@@ -45,8 +31,7 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
 
     $scope.updateProperty = function (property) {       
             $http.post('/property/updateProperty', property).success(function (result) {
-                if (result) {
-                    //  $scope.propertyManagament.splice($scope.propertyManagament.indexOf(property), 1);                   
+                if (result) {                            
                 }
                 $scope.show = false;
             });        
@@ -111,8 +96,7 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
             $scope.property.owners = [owner];
         }
         $http.post('/property/updateProperty', property).success(function (result) {
-            if (result) {
-                //  $scope.propertyManagament.splice($scope.propertyManagament.indexOf(property), 1);                   
+            if (result) {                             
             }
             $scope.showOnwerDetails = false;
         });
@@ -123,12 +107,6 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
        $scope.owner = owner;
        $scope.addOwner();
        $scope.showOnwerDetails = true;
-        //if ($scope.property.mortgage) {
-        //    $scope.property.hasMortgage = true;
-        //}
-        //else {
-        //    $scope.property.hasMortgage = false;
-        //}
     }
     
     $scope.filterOptions = {
@@ -194,9 +172,15 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         columnDefs: [
         { field: 'upi', displayName: 'UPI' },
         { field: 'area', displayName: 'Area' },
-        { field: 'manner_of_permanent_usage', displayName: 'Manner of Permanent Usage', width: 250 },
+        //{ field: 'mannerOfPermanentUsage', displayName: 'Manner of Permanent Usage', width: 250 },
+       {
+           field: 'mannerOfPermanentUsage',
+           displayName: 'Manner of Permanent Usage',
+           width: 250,
+           cellTemplate: '<div class="getData" my-data="{{row.getProperty(col.field)}}"></div>'
+       },
         {
-            displayName: 'Actions',
+            displayName: 'Actions',            
             cellTemplate: '<button type="button" class="btn btn-primary" ng-model="show" ng-click="editProperty(row.entity)">Modify</button> \
                 <button type="button" class="btn btn-primary" ng-click="deleteProperty(row.entity)">Delete</button>'
         }
@@ -260,10 +244,10 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         filterOptions: $scope.ownersFilterOptions,
         columnDefs: [
         { field: 'name', displayName: 'Name' },
-        { field: 'last_name', displayName: 'Last Name' },
+        { field: 'lastName', displayName: 'Last Name' },
         { field: 'address', displayName: 'Address' },
         {
-            displayName: 'Actions',
+            displayName: 'Actions',           
             cellTemplate: '<button type="button" class="btn btn-primary" ng-model="show" ng-click="editOwner(row.entity)">Modify</button> \
                 <button type="button" class="btn btn-primary" ng-click="deleteOwner(row.entity)">Delete</button>'
         }
@@ -301,5 +285,25 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
             }
         };
     });
+
+app.directive('getData', function() {
+  
+    return {
+        restrict: 'C',
+        replace: true,
+        transclude: true,
+        scope: { myData: '@myData' },
+        template: '<div ng-switch on="myData">' +
+                    '<div ng-switch-when="0"> Residentional</div>' +
+                    '<div ng-switch-when="1"> Industrial</div>' +
+                    '<div ng-switch-when="2"> Agricultural</div>' +
+                    '<div ng-switch-default class="grid">Error</div>' +
+                  '</div>'
+    }
+  
+});
+
+
+
 
  

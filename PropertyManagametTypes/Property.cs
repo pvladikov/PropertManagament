@@ -18,25 +18,24 @@ namespace PropertyManagametTypes
     {
        
         public string upi { get; set; }
+
         public List<Owner> owners { get; set; }
+
         public decimal area { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         [BsonRepresentation(BsonType.String)]
-        public MannerOfPermanentUsage manner_of_permanent_usage { get; set; }
+        [BsonElement("manner_of_permanent_usage")]        
+        public MannerOfPermanentUsage mannerOfPermanentUsage { get; set; }
 
-        public string picture_url { get; set; }
+        [BsonElement("picture_url")]
+        public string pictureUrl { get; set; }
+
         public Mortgage mortgage { get; set; }
 
         public Property()
         {
             owners = new List<Owner>();
         }
-    }  
-
-
-    //public abstract class EntityBase
-    //{
-    //    public ObjectId Id { get; set; }
-    //}
+    } 
 }

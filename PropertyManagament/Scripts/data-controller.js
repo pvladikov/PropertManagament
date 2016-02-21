@@ -45,11 +45,11 @@
                 alert(d.Message);
                 if (is_property) {
                     $scope.property = sharedProperties.getProperty();
-                    $scope.property.picture_url = d.URL;
+                    $scope.property.pictureUrl = d.URL;
                 }
                 else {
                     $scope.owner = sharedProperties.getOwner();
-                    $scope.owner.picture_url = d.URL;
+                    $scope.owner.pictureUrl = d.URL;
                 }
                 ClearForm();
             }, function (e) {

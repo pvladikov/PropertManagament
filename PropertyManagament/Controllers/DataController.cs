@@ -27,21 +27,10 @@ namespace PropertyManagament.Controllers
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                     pictureURL = Path.Combine(@"C:\PropertyPictures", fileName);
                     file.SaveAs(Path.Combine(Server.MapPath("~/UploadedFiles"), fileName));
-
-                    //UploadedFile f = new UploadedFile
-                    //{
-                    //    FileName = actualFileName,
-                    //    FilePath = fileName,
-                    //    Description = description,
-                    //    FileSize = size
-                    //};
-                    //using (MyDatabaseEntities dc = new MyDatabaseEntities())
-                    //{
-                    //    dc.UploadedFiles.Add(f);
-                    //    dc.SaveChanges();
+           
                     Message = "File uploaded successfully";
                     flag = true;
-                    //}
+                   
                 }
                 catch (Exception exp)
                 {
