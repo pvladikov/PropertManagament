@@ -93,18 +93,41 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
     }
 
     //Delete Owner
-    $scope.deleteOwner = function (property,owner) {
-        //if (!$scope.property.mortgage) {
-        //    $http.post('/property/createMortgage', property).success(function (data) {
-        //        $scope.property.mortgage = data;
-        //    });
-        //}
-        //else {
+    $scope.deleteOwner = function (property,owner) {  
         $scope.property.owners.splice($scope.property.owners.indexOf(property), 1);
             $http.post('/property/updateProperty', property).success(function (result) {
                 if (result) {
                 }
             });        
+    }
+
+    $scope.updateOwner = function (property, owner) {
+        $scope.property.owners.pop(owner);
+        if ($scope.property.owners) {
+            $scope.property.owners.push(owner);
+        }
+        else {
+            $scope.property.owners = [owner];
+        }
+        $http.post('/property/updateProperty', property).success(function (result) {
+            if (result) {
+                //  $scope.propertyManagament.splice($scope.propertyManagament.indexOf(property), 1);                   
+            }
+            $scope.showOnwerDetails = false;
+        });
+    }
+
+
+   $scope.editOwner = function (owner) {
+       $scope.owner = owner;
+       $scope.addOwner();
+       $scope.showOnwerDetails = true;
+        //if ($scope.property.mortgage) {
+        //    $scope.property.hasMortgage = true;
+        //}
+        //else {
+        //    $scope.property.hasMortgage = false;
+        //}
     }
     
     $scope.filterOptions = {
@@ -209,19 +232,29 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         sharedProperties.addProperty($scope.property);      
     };
 
+    $scope.addOwner = function () {
+        sharedProperties.addOwner($scope.property);
+    };
 }])
     .service('sharedProperties', function () {
         var data = null;
 
         return {
-            getProperty:function () {
-                // This exposed private data
+            getProperty:function () {               
                 return data;
             },
 
             addProperty: function (property) {
                 data = property;
-            }       
+            },
+
+            getOwner: function () {              
+                return data;
+            },
+
+            addOwner: function (owner) {
+                data = owner;
+           }  
         };
     });
 
