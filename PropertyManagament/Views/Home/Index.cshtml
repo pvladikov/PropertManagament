@@ -98,26 +98,31 @@
             </form>
         </div>
     </div>
-    <div class="gridStyle" ng-grid="ownersGridOptions"></div>
-
-    <br />
-    <br />
-    <form>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
-
-                <input type="text" class="form-control" placeholder="Search Owners" ng-model="ownersFilterOptions.filterText">
-
-            </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Owners</h3>
         </div>
-    </form>
-    <div>
-        <input type='button' value='New Owner' ng-click="createOwner(property)" />
+        <div class="gridStyle" ng-grid="ownersGridOptions"></div>
+
+        <br />
+        <br />
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                    <input type="text" class="form-control" placeholder="Search Owners" ng-model="ownersFilterOptions.filterText">
+
+                </div>
+            </div>
+        </form>
+        <div>
+            <input type='button' value='New Owner' ng-click="createOwner(property)" />
+        </div>
     </div>
 
-    <br />
-    <br />
+        <br />
+        <br />
 
-    <button type="button" ng-click="updateProperty(property)">Submit</button>
+        <button type="button" ng-click="updateProperty(property)">Submit</button>
     </div>

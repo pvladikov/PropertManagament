@@ -91,6 +91,21 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
             }
             });      
     }
+
+    //Delete Owner
+    $scope.deleteOwner = function (property,owner) {
+        //if (!$scope.property.mortgage) {
+        //    $http.post('/property/createMortgage', property).success(function (data) {
+        //        $scope.property.mortgage = data;
+        //    });
+        //}
+        //else {
+        $scope.property.owners.splice($scope.property.owners.indexOf(property), 1);
+            $http.post('/property/updateProperty', property).success(function (result) {
+                if (result) {
+                }
+            });        
+    }
     
     $scope.filterOptions = {
         filterText: "",
