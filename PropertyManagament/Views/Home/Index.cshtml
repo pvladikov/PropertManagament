@@ -25,104 +25,118 @@
 
 <br />
 <br />
-<br />
 
-<div ng-show="show">
-    <form id="updateCategoryForm" class="form-inline">
-        <div class="form-group">
-            <label class="sr-only" id="upi" for="upiInput">UPI</label>
-            <input type="text" class="form-control" id="upiInput" ng-model="property.upi" placeholder="UPI">
-        </div>
-        <div class="form-group">
-            <label class="sr-only" id="areaLbl" for="areaInput">Area</label>
-            <input type="text" class="form-control" id="areaInput" ng-model="property.area" placeholder="Area">
-        </div>
-        <div class="form-group">
-            <label class="sr-only" id="mannerOfUsageLbl" for="mannerOfUsageSelect">Type</label>
-            <select id="mannerOfUsageSelect" ng-model="property.manner_of_permanent_usage" ng-options="c.Value as c.Text for c in mannerofpermanentusage" class="form-control"></select>
-        </div>
-    </form>
-    <br />
-    <br />
-    <div class="form-group" ng-controller="data-controller">
-        <form novalidate name="f1" ng-submit="SaveFile()" class="form-inline">
-            <div style="color: red">{{Message}}</div>
-            <div class="form-group">
-                <label class="sr-only" id="fileUploadLbl" for="fileUpload">Select</label>
-                <input id="fileUpload" type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+    <div ng-show="show">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Property Details</h3>
             </div>
-            @*<span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
-                <span class="error">{{FileInvalidMessage}}</span>*@
-            <div class="form-group">
-                <input type="submit" value="Upload Image" />
-            </div>
-        </form>
-    </div>
-    <div>
-        <div><img src="/UploadedFiles/{{property.picture_url}}" alt="No Image" height="150" width="150" /></div>
-    </div>
-    <br />
 
-    <div class="form-group">
-        <form id="mortgageCheckBoxForm" class="form-inline">
-            <label class="checkbox" id="hasMortgageLbl" for="hasMortgageCheckbox">
-                <input id="hasMortgageCheckbox" type="checkbox" ng-model="property.hasMortgage" ng-change="manageMortgage(property)">
-                Mortgage
-            </label>
-        </form>
-    </div>
-
-    <div class="panel panel-primary" ng-show="property.hasMortgage">
-        <div class="panel-heading">
-            <h3 class="panel-title">Mortgage</h3>
-        </div>
-
-        <div class="panel-body">
-
-            <form id="addEditPFForm" class="form-inline">
-
-                <div class="form-group">
-                    <label class="sr-only" for="moneyInput">Money</label>
-                    <input id="moneyInput" name="moneyInput" type='text' class="form-control" ng-model="property.mortgage.amount" placeholder="Amount" />
-                </div>
-
-
-                <div class="form-group">
-                    <div class='input-group date' id='endDatePicker'>
-                        <input id="endDate" name="endDateName" type='date' class="form-control" ng-model="property.mortgage.end_date" placeholder="End Date" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <br />
+            <div class="panel-body">
+                <form id="updateCategoryForm" class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" id="upi" for="upiInput">UPI</label>
+                        <input type="text" class="form-control" id="upiInput" ng-model="property.upi" placeholder="UPI">
                     </div>
+                    <div class="form-group">
+                        <label class="sr-only" id="areaLbl" for="areaInput">Area</label>
+                        <input type="text" class="form-control" id="areaInput" ng-model="property.area" placeholder="Area">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" id="mannerOfUsageLbl" for="mannerOfUsageSelect">Type</label>
+                        <select id="mannerOfUsageSelect" ng-model="property.manner_of_permanent_usage" ng-options="c.Value as c.Text for c in mannerofpermanentusage" class="form-control"></select>
+                    </div>
+                </form>
+                <br />
+                <br />
+                <div class="form-group" ng-controller="data-controller">
+                    <form novalidate name="f1" ng-submit="SaveFile()" class="form-inline">
+                        <div style="color: red">{{Message}}</div>
+                        <div class="form-group">
+                            <label class="sr-only" id="fileUploadLbl" for="fileUpload">Select</label>
+                            <input id="fileUpload" type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required />
+                        </div>
+                        @*<span class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.file.$error.required">Image required!</span>
+                    <span class="error">{{FileInvalidMessage}}</span>*@
+                        <div class="form-group">
+                            <input type="submit" value="Upload Image" />
+                        </div>
+                    </form>
                 </div>
+                <div>
+                    <div><img src="/UploadedFiles/{{property.picture_url}}" alt="No Image" height="150" width="150" /></div>
+                </div>
+                <br />
+            </div>
+            </div>
+
+        <br />
+   
+        <div class="form-group">
+            <form id="mortgageCheckBoxForm" class="form-inline">
+                <label class="checkbox" id="hasMortgageLbl" for="hasMortgageCheckbox">
+                    <input id="hasMortgageCheckbox" type="checkbox" ng-model="property.hasMortgage" ng-change="manageMortgage(property)">
+                    Mortgage
+                </label>
             </form>
         </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Owners</h3>
-        </div>
-        <div class="gridStyle" ng-grid="ownersGridOptions"></div>
 
-        <br />
-        <br />
-        <form>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
-
-                    <input type="text" class="form-control" placeholder="Search Owners" ng-model="ownersFilterOptions.filterText">
-
-                </div>
+        <div class="panel panel-primary" ng-show="property.hasMortgage">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mortgage</h3>
             </div>
-        </form>
-        <div>
-            <input type='button' value='New Owner' ng-click="createOwner(property)" />
+
+            <div class="panel-body">
+
+                <form id="addEditPFForm" class="form-inline">
+
+                    <div class="form-group">
+                        <label class="sr-only" for="moneyInput">Money</label>
+                        <input id="moneyInput" name="moneyInput" type='text' class="form-control" ng-model="property.mortgage.amount" placeholder="Amount" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class='input-group date' id='endDatePicker'>
+                            <input id="endDate" name="endDateName" type='date' class="form-control" ng-model="property.mortgage.end_date" placeholder="End Date" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Owners</h3>
+            </div>
+            <br />
+            <br />
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                            <input type="text" class="form-control" placeholder="Search Owners" ng-model="ownersFilterOptions.filterText">
+
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <input type='button' value='New Owner' ng-click="createOwner(property)" />
+                </div>
+                <div class="gridStyle" ng-grid="ownersGridOptions"></div>
+            </div>
+            </div>
+       
+        <br />
+
+        <button type="button" ng-click="updateProperty(property)">Update Property Details</button>
 
         <br />
         <br />
-
-        <button type="button" ng-click="updateProperty(property)">Submit</button>
+        <br />
     </div>
