@@ -88,7 +88,24 @@ namespace PropertyManagament.Controllers
             //return Json(property);
         }
 
-                
+        [HttpPost]
+        public JsonResult CreateOwner(Property property)
+        {
+            Owner owner = new Owner();
+            property.owners.Add(owner);
+
+            var res = propertyRepository.Update(property);
+            return Json(owner);
+
+            //mortgageRepository.Create(mortgage);
+            // var json = JsonConvert.SerializeObject(property, new CustumStringEnumConverter());
+
+            //return new ContentResult { Content = property, ContentType = "application/json" };
+
+            //return Json(property);
+        }
+
+
         //public ActionResult NewProperty()
         //{
         //    Property property = new Property();

@@ -30,7 +30,7 @@ namespace PropertyManagametTypes
 
         public Property()
         {
-           // area = 100;
+            owners = new List<Owner>();
         }
     }  
 

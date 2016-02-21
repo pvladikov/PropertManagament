@@ -59,7 +59,7 @@
         </form>
     </div>
     <div>
-        <div><img src="/UploadedFiles/{{property.picture_url}}" height="150" width="150" /></div>
+        <div><img src="/UploadedFiles/{{property.picture_url}}" alt="No Image" height="150" width="150" /></div>
     </div>
     <br />
 
@@ -113,7 +113,11 @@
         </div>
     </form>
     <div>
-        <input type='button' value='New Owner' data-ng-click='newOwner()' />
+        <input type='button' value='New Owner' ng-click="createOwner(property)" />
     </div>
+
+    <br />
+    <br />
+
     <button type="button" ng-click="updateProperty(property)">Submit</button>
     </div>

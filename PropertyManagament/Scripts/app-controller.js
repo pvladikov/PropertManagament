@@ -74,10 +74,22 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         else {
             $scope.property.mortgage = null;
             $http.post('/property/updateProperty', property).success(function (result) {
-                if (result) {                  
+                if (result) {
                 }
             });
         }
+    }
+
+    //Create Owner
+    $scope.createOwner = function (property) {       
+        $http.post('/property/createOwner', property).success(function (owner) {
+            if ($scope.property.owners) {
+                $scope.property.owners.push(owner);
+            }
+            else {
+                $scope.property.owners = [owner];
+            }
+            });      
     }
     
     $scope.filterOptions = {
@@ -159,17 +171,17 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
     $scope.oTotalServerItems = 0;
 
     $scope.ownersGridOptions = {
-        data: 'propertyManagament',
+        data: 'property.owners',
        // enablePaging: true,
-        showFooter: true,
+       // showFooter: true,
         enableRowSelection: false,
         //totalServerItems: 'oTotalServerItems',
        // pagingOptions: $scope.pagingOptions,
-        filterOptions: $scope.ownersFilterOptions,
+      //  filterOptions: $scope.ownersFilterOptions,
         columnDefs: [
-        { field: 'id', displayName: 'ID' },
         { field: 'name', displayName: 'Name' },
-        { field: 'last_name', displayName: 'Last Name'},
+        { field: 'last_name', displayName: 'Last Name' },
+        { field: 'address', displayName: 'Address' },
         {
             displayName: 'Actions',
             cellTemplate: '<button type="button" class="btn btn-primary" ng-model="show" ng-click="editOwner(row.entity)">Modify</button> \
