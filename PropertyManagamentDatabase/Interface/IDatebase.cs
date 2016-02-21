@@ -15,5 +15,6 @@ namespace PropertyManagamentDatabase.Interface
         IQueryable<T> Query { get; set; }
         void Create(T item);
         bool Update(T item);
+        T GetByID(string id);
     }
 }

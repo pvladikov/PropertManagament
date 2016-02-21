@@ -149,6 +149,7 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
             $scope.$apply();
         }
     };
+
     $scope.getPagedDataAsync = function (pageSize, page, searchText) {
         setTimeout(function () {
             var data;
@@ -179,8 +180,7 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         if (newVal !== oldVal) {
             $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
         }
-    }, true);
-
+    }, true); 
 
     $scope.pmGridOptions = {
         data: 'propertyManagament',
@@ -202,20 +202,61 @@ app.controller('homeController',['$scope','sharedProperties','$http', function (
         ]
     };
 
+    $scope.getOwnersPagedDataAsync = function (pageSize, page, searchText) {
+        setTimeout(function () {
+            var data;
+            if (searchText) {
+                var ft = searchText.toLowerCase();
+                $http.get("/property/getOnwesByProperty", { params: { property_id: sharedProperties.getProperty() } }).success(function (data) {
+                    data = data.filter(function (item) {
+                        return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
+                    });
+                    $scope.setOwnersPagingData(data, page, pageSize);
+                });
+            } else {
+                $http.get("/property/getOnwesByProperty", { params: { property_id: sharedProperties.getProperty() } }).success(function (largeLoad) {
+                    $scope.setOwnersPagingData(largeLoad, page, pageSize);
+                });
+            }
+        }, 100);
+    };
+
+
+    $scope.setOwnersPagingData = function (data, page, pageSize) {
+        var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+        $scope.property.owners = pagedData;
+        $scope.totalServerItems = data.length;
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    };
+
+    $scope.$watch('ownersFilterOptions', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.getOwnersPagedDataAsync($scope.ownerPagingOptions.pageSize, $scope.ownerPagingOptions.currentPage, $scope.ownersFilterOptions.filterText);
+        }
+    }, true);
+
     $scope.ownersFilterOptions = {
         filterText: "",
-        useExternalFilter: true
+        useExternalFilter: true,
     };
+
     $scope.oTotalServerItems = 0;
+    $scope.ownerPagingOptions = {
+        pageSizes: [5, 10, 20],
+        pageSize: 5,
+        currentPage: 1
+    };
 
     $scope.ownersGridOptions = {
         data: 'property.owners',
-       // enablePaging: true,
-       // showFooter: true,
+        enablePaging: true,
+        showFooter: true,
         enableRowSelection: false,
-        //totalServerItems: 'oTotalServerItems',
-       // pagingOptions: $scope.pagingOptions,
-      //  filterOptions: $scope.ownersFilterOptions,
+        totalServerItems: 'oTotalServerItems',
+        pagingOptions: $scope.ownerPagingOptions,
+        filterOptions: $scope.ownersFilterOptions,
         columnDefs: [
         { field: 'name', displayName: 'Name' },
         { field: 'last_name', displayName: 'Last Name' },

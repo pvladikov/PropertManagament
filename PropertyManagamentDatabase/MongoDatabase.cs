@@ -89,6 +89,20 @@ namespace PropertyManagamentDatabase
 
         }
 
+        public T GetByID(string id)
+        {
+            //ObjectId id = new ObjectId(typeof(T).GetProperty("Id").GetValue(item, null).ToString());
+            //var filter_builder = Builders<T>.Filter;
+            //var filter = filter_builder.Eq("_id", id);
+
+            //var result = collection.UpdateOne<T>(predicate, UpdateDefinition<T> new UpdateOptions { IsUpsert = true },);
+            //return result.ModifiedCount == 1;
+
+            var filter = Builders<T>.Filter.Eq(s => s.Id, id);
+            var result = collection.Find(filter).FirstOrDefault();
+            return result;
+        }
+
         //public IMongoCollection<Property> Property
         //{
         //    get { return _db.GetCollection<Property>(COLLECTION_NAME); }

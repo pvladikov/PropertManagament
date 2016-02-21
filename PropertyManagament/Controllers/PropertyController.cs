@@ -19,7 +19,7 @@ namespace PropertyManagament.Controllers
     public class PropertyController : Controller
     {
         IDatabase<Property> propertyRepository;
-        IDatabase<Mortgage> mortgageRepository;
+        //IDatabase<Mortgage> mortgageRepository;
         IDatabase<Owner> ownerRepository;
 
         public PropertyController() : this(new MongoDatabase<Property>(), new MongoDatabase<Owner>())
@@ -59,7 +59,21 @@ namespace PropertyManagament.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
+        [HttpGet]
+        public JsonResult getOnwesByProperty(string property_id)
+        {
+            Property property = JsonConvert.DeserializeObject<Property>(property_id);
+            property = propertyRepository.GetByID(property.Id);
+            List<Owner> owners = new List<Owner>();
+            if (property != null)
+            {
+                owners = property.owners;
+            }
+         
+            return Json(owners, JsonRequestBehavior.AllowGet);
+        }
+
+    [HttpPost]
         public ActionResult CreateProperty()
         {
             Property property = new Property();
